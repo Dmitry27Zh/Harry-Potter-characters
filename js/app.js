@@ -6,7 +6,6 @@ const loadCharacters = async () => {
     const res = await fetch(URL)
     const characters = await res.json()
     displayCharacters(characters)
-    console.table(characters)
   } catch (e) {
     console.error(e)
   }
