@@ -78,5 +78,7 @@ h1 {
 .character > img {
   grid-area: image;
   aspect-ratio: 163 / 227;
+  max-width: 100%;
+  width: 100%;
   background-color: #333333;
 }
