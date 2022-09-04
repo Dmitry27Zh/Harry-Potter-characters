@@ -1,11 +1,28 @@
 const URL = 'http://hp-api.herokuapp.com/api/characters'
 const charactersList = document.getElementById('characters-list')
 
+const initSearch = (characters) => {
+  const searchBar = document.getElementById('search-bar')
+
+  searchBar.addEventListener('input', (e) => {
+    const searchString = e.target.value.trim().toLowerCase()
+
+    const filteredCharacters = characters.filter((character) => {
+      const { name, house } = character
+      const values = [name, house]
+      return values.some((value) => value.toLowerCase().includes(searchString))
+    })
+
+    displayCharacters(filteredCharacters)
+  })
+}
+
 const loadCharacters = async () => {
   try {
     const res = await fetch(URL)
     const characters = await res.json()
     displayCharacters(characters)
+    initSearch(characters)
   } catch (e) {
     console.error(e)
   }
