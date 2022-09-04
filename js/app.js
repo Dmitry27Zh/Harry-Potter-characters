@@ -1,10 +1,13 @@
+import { debounce } from './utils/debounce.js'
+
 const URL = 'http://hp-api.herokuapp.com/api/characters'
 const charactersList = document.getElementById('characters-list')
+const DEBOUNCE_TIMEOUT = 1000
 
 const initSearch = (characters) => {
   const searchBar = document.getElementById('search-bar')
 
-  searchBar.addEventListener('input', (e) => {
+  const onSearchBarInput = debounce((e) => {
     const searchString = e.target.value.trim().toLowerCase()
 
     const filteredCharacters = characters.filter((character) => {
@@ -14,7 +17,9 @@ const initSearch = (characters) => {
     })
 
     displayCharacters(filteredCharacters)
-  })
+  }, DEBOUNCE_TIMEOUT)
+
+  searchBar.addEventListener('input', onSearchBarInput)
 }
 
 const loadCharacters = async () => {
