@@ -1,3 +1,5 @@
+@import url('./components/collapse.css');
+
 body {
   margin: 0;
   font-family: Arial, Helvetica, sans-serif;
@@ -50,40 +52,46 @@ h1 {
 #characters-list {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  align-items: start;
   gap: 20px;
   padding-inline-start: 0;
 }
 
 .character {
-  display: grid;
-  grid-template-columns: 3fr 1fr;
-  grid-template-areas:
-    'name image'
-    'house image';
-  grid-auto-rows: 1fr;
-  align-content: center;
-  gap: 15px;
   list-style-type: none;
   min-height: 80px;
   padding: 10px 20px;
   word-break: break-word;
-  text-align: left;
   background-color: #eaeaea;
   border-radius: 3px;
 }
 
-.character > h3 {
+.character :where(h3, p) {
+  margin: 0;
+}
+
+.character-main {
+  display: grid;
+  grid-template-columns: 3fr 1fr;
+  grid-template-areas:
+    'name image'
+    'house image'
+    'more image';
+  grid-template-rows: 1fr;
+  align-content: center;
+  gap: 10px 15px;
+  text-align: left;
+}
+
+.character-main > h3 {
   grid-area: name;
-  align-self: end;
-  margin: 0;
 }
 
-.character > p {
+.character-main > p {
   grid-area: house;
-  margin: 0;
 }
 
-.character > img {
+.character-main > img {
   position: relative;
   grid-area: image;
   aspect-ratio: 163 / 227;
@@ -93,7 +101,24 @@ h1 {
   background-color: #333333;
 }
 
-.character > img::after {
+.character-main > button {
+  grid-area: more;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 20px;
+  padding: 0;
+  font: inherit;
+  text-align: left;
+  background-color: transparent;
+  border: none;
+}
+
+.character-main > button::after {
+  content: '\21e9';
+}
+
+.character-main > img::after {
   position: absolute;
   inset: 0;
   display: inline-flex;
@@ -103,4 +128,8 @@ h1 {
   color: #ffffff;
   background-color: inherit;
   content: '\f1c5';
+}
+
+.character-extra {
+  padding: 20px 0;
 }

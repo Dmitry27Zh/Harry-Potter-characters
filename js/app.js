@@ -1,4 +1,5 @@
 import { debounce } from './utils/debounce.js'
+import './components/collapse.js'
 
 const URL = 'http://hp-api.herokuapp.com/api/characters'
 const charactersList = document.getElementById('characters-list')
@@ -37,14 +38,23 @@ loadCharacters()
 
 const displayCharacters = (characters) => {
   const htmlString = characters
-    .map(({ name, house, image }) => {
+    .map(({ name, house, image, ...extra }) => {
       const houseString = house ? `<p>House: ${house}</p>` : ''
+      const extraString = Object.entries(extra)
+        .map(([key, value]) => `<p>${key}: ${value}</p>`)
+        .join('')
 
       return `
-        <li class="character">
-          <h3>${name}</h3>
-          ${houseString}
-          <img src="${image}" />
+        <li class="character collapse" data-collapse>
+          <div class="character-main">
+            <h3>${name}</h3>
+            ${houseString}
+            <img src="${image}" />
+            <button class="collapse__toggle" type="button" data-collapse-toggle>More</button>
+          </div>
+          <div class="collapse__section" data-collapse-section>
+            <div class="character-extra">${extraString}</div>
+          </div>
         </li>
       `
     })

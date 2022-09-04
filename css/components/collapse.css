@@ -1,0 +1,111 @@
+:where(.collapse[data-collapse]) .collapse__toggle {
+  width: 100%;
+}
+.collapse .no-transition {
+  -webkit-transition: none;
+  transition: none;
+}
+.collapse-transition .collapse .collapse__toggle-icon,
+.collapse.collapse-transition .collapse__toggle-icon {
+  -webkit-transition: -webkit-transform 0.3s ease;
+  transition: -webkit-transform 0.3s ease;
+  transition: transform 0.3s ease;
+  transition: transform 0.3s ease, -webkit-transform 0.3s ease;
+}
+.collapse-transition .collapse .collapse__section,
+.collapse.collapse-transition .collapse__section {
+  -webkit-transition: height 0.3s ease;
+  transition: height 0.3s ease;
+}
+.collapse__toggle {
+  display: -webkit-inline-box;
+  display: -ms-inline-flexbox;
+  display: inline-flex;
+  -webkit-box-pack: justify;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 10px;
+  cursor: pointer;
+}
+.collapse__toggle[data-open-text]::before {
+  content: attr(data-open-text);
+}
+.collapse__toggle[data-collapsed='false'][data-close-text]::before {
+  content: attr(data-close-text);
+}
+.collapse__toggle[data-collapsed='false'] .collapse__toggle-icon {
+  -webkit-transform: rotate(-180deg);
+  transform: rotate(-180deg);
+}
+.collapse__toggle-icon {
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+.collapse__section {
+  --collapsed-height: 0;
+  height: var(--collapsed-height);
+  overflow: hidden;
+}
+.collapse__section[data-collapsed='false'] {
+  height: auto;
+}
+.collapse__section-inner {
+  padding: 10px;
+}
+
+hr {
+  margin: 0;
+}
+
+.collapse {
+  max-width: 500px;
+  padding: 10px;
+  margin: 0 auto;
+}
+.collapse__toggle {
+  padding: 5px 10px;
+  border: 1px solid rgb(25, 150, 54);
+}
+.collapse__section-inner {
+  border: 1px solid red;
+}
+.collapse__section-inner p {
+  margin: 0;
+}
+
+.partial .collapse__section {
+  --collapsed-height: 50px;
+  border: 1px solid red;
+}
+.partial .collapse__section-inner {
+  border: none;
+}
+
+.separate {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: flex-end;
+  gap: 20px;
+}
+
+.multi__sections {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+}
+.multi .collapse__toggle {
+  margin-bottom: 20px;
+}
+
+.group {
+  max-width: 560px;
+  margin: 0 auto;
+  padding: 10px;
+  border: 1px solid blue;
+}
