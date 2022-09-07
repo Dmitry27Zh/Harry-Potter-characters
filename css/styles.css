@@ -62,6 +62,7 @@ h1 {
   min-height: 80px;
   padding: 10px 20px;
   word-break: break-word;
+  text-align: left;
   background-color: #eaeaea;
   border-radius: 3px;
 }
@@ -80,7 +81,6 @@ h1 {
   grid-template-rows: 1fr;
   align-content: center;
   gap: 10px 15px;
-  text-align: left;
 }
 
 .character-main > h3 {
@@ -132,4 +132,8 @@ h1 {
 
 .character-extra {
   padding: 20px 0;
+}
+
+.extra-sub {
+  padding: 5px 0 5px 30px;
 }

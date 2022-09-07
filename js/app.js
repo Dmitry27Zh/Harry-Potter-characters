@@ -1,5 +1,6 @@
 import { debounce } from './utils/debounce.js'
 import './components/collapse.js'
+import { capitalize, getStringWithoutCase } from './utils/string.js'
 
 const URL = 'http://hp-api.herokuapp.com/api/characters'
 const charactersList = document.getElementById('characters-list')
@@ -36,13 +37,38 @@ const loadCharacters = async () => {
 
 loadCharacters()
 
+const getValueString = (value) => {
+  switch (typeof value) {
+    case 'boolean':
+      return value ? 'yes' : 'no'
+    case 'object':
+      if (Array.isArray(value)) {
+        return value.join(', ')
+      }
+
+      const sub = Object.entries(value).map(getPropertyString).join('')
+      return sub ? `<div class="extra-sub">${sub}</div>` : ''
+    default:
+      return value
+  }
+}
+
+const getPropertyString = ([key, value]) => {
+  const valueString = getValueString(value)
+
+  if (!valueString) {
+    return ''
+  }
+
+  const keyString = capitalize(getStringWithoutCase(key))
+  return `<p>${keyString}: ${valueString}</p>`
+}
+
 const displayCharacters = (characters) => {
   const htmlString = characters
     .map(({ name, house, image, ...extra }) => {
       const houseString = house ? `<p>House: ${house}</p>` : ''
-      const extraString = Object.entries(extra)
-        .map(([key, value]) => `<p>${key}: ${value}</p>`)
-        .join('')
+      const extraString = Object.entries(extra).map(getPropertyString).join('')
 
       return `
         <li class="character collapse" data-collapse>
