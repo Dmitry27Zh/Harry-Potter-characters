@@ -33,10 +33,10 @@ class Collapse {
       return
     }
 
-    const { sections, container, group } = this.getElements(toggle)
+    const { sections, container, parentSection, group } = this.getElements(toggle)
 
     if (group) {
-      this.toggleGroup(group, isCollapse)
+      this.toggleGroup(parentSection, group, isCollapse)
     }
 
     sections.forEach((section) => {
@@ -80,11 +80,16 @@ class Collapse {
     setTimeout(() => document.documentElement.classList.add(Classname.READY_TRANSITION))
   }
 
-  toggleGroup(group, isCollapse) {
+  toggleGroup(parentSection, group, isCollapse) {
     if (group.matches(`[${Attribute.EXPAND_ONLY}]`) && !isCollapse) {
       const toggles = this.groupToToggles.get(group)
-      const collapsingToggles = [].filter.call(toggles, (toggle) => !this.getElements(toggle).parentSection)
-      console.log(collapsingToggles)
+
+      const collapsingToggles = [].filter.call(
+        toggles,
+        (toggle) => parentSection === this.getElements(toggle).parentSection
+      )
+
+      this.toggleViewEvery(collapsingToggles, true)
     }
   }
 
@@ -127,7 +132,7 @@ class Collapse {
   }
 
   setElements(toggle, id) {
-    let parentSection, sections, container, group
+    let container, sections, parentSection, isNested, group
 
     if (!id) {
       container = toggle.closest(`[${Attribute.CONTAINER}]`)
@@ -135,6 +140,7 @@ class Collapse {
     }
 
     parentSection = toggle.closest(`[${Attribute.SECTION}]`)
+    isNested = !!parentSection
     group = toggle.closest(`[${Attribute.GROUP}]`)
 
     if (group && !this.groupToToggles.has(group)) {
@@ -143,9 +149,10 @@ class Collapse {
     }
 
     this.elementsMap.set(toggle, {
-      parentSection,
-      sections,
       container,
+      sections,
+      parentSection,
+      isNested,
       group,
     })
   }
@@ -190,5 +197,5 @@ function expandSection(section) {
 }
 
 function isCollapsed(element) {
-  return element.getAttribute(Attribute.COLLAPSED_STATE) === 'true'
+  return !element.hasAttribute(Attribute.COLLAPSED_STATE) || element.getAttribute(Attribute.COLLAPSED_STATE) === 'true'
 }
