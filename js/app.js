@@ -2,7 +2,7 @@ import { debounce } from './utils/debounce.js'
 import './components/collapse.js'
 import { capitalize, getStringWithoutCase } from './utils/string.js'
 
-const URL = 'http://hp-api.herokuapp.com/api/characters'
+const URL = 'https://hp-api.herokuapp.com/api/characters'
 const charactersList = document.getElementById('characters-list')
 const DEBOUNCE_TIMEOUT = 1000
 
